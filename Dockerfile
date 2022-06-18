@@ -1,6 +1,6 @@
 FROM python:3.10.4
 
-WORKDIR /auth-api
+WORKDIR /micro-auth
 
 COPY ./requirements.txt /requirements.txt
 

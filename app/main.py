@@ -9,7 +9,7 @@ app = FastAPI(
     swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"},
 )
 
-origins = [os.environ.get("SOULAC_API_URL")]
+origins = [os.environ.get("SOULAC_API_URL"), os.environ.get("FRONTEND_URL")]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

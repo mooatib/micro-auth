@@ -11,7 +11,7 @@ from .model import token_schemas
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 def verify_password(plain_password: str, hashed_password: str):
@@ -48,14 +48,14 @@ def decodeAndVerifyToken(access_token: str):
 async def get_token_data(access_token: str = Depends(oauth2_scheme)):
     try:
         payload = decodeAndVerifyToken(access_token)
-        username: str = payload.get("username")
-        if username is None:
+        email: str = payload.get("email")
+        if email is None:
             raise HTTPException(
                 status_code=401,
                 detail="Could not validate credentials",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        token_data = token_schemas.TokenData(username=username)
+        token_data = token_schemas.TokenData(email=email)
     except JWTError:
         raise HTTPException(
             status_code=401,
